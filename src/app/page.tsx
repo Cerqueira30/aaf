@@ -71,6 +71,6 @@ export default function Home() {
 
       {step === "done" && <div className="panel done"><div className="okc" aria-hidden="true">✓</div><h1>Votação concluída!</h1>
         <p>Obrigado por participares no Concurso de Monstrinhos da AAAF JI BPC.</p>
-        <button className="btn" onClick={() => { setSel([]); setStep("pick"); }}>Votar outra vez</button></div>}
+      </div>}
     </main></>);
 }
