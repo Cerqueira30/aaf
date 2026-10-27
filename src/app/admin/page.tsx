@@ -80,7 +80,7 @@ export default function Admin() {
   const rank = (r: Row) => 1 + rows.filter((x) => x.votes > r.votes).length;
   const tied = (r: Row) => rows.filter((x) => x.votes === r.votes).length > 1;
   const top = rows.filter((r) => r.active && rank(r) <= 3);
-  return <main style={{ paddingTop: 24 }}>
+  return <main>
     <h1>Administração</h1>
     <p>Votações submetidas: <b>{tot.participations}</b> · Votos individuais: <b>{tot.votes}</b> · Fotografias ativas: <b>{rows.filter((r) => r.active).length}</b> · Votação: <b>{open ? "aberta" : "encerrada"}</b></p>
     <button className="btn" onClick={() => setVoting(!open)}>{open ? "Encerrar votação" : "Abrir votação"}</button>{" "}
