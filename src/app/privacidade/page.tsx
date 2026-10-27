@@ -1,13 +1,12 @@
 // EDITA ESTES TRÊS VALORES ANTES DE PUBLICAR
-const CONTACTO = "[indicar email ou telefone de contacto da AAAF JI BPC]";
-const CONSERVACAO = "[indicar o prazo, por exemplo: 30 dias após o fim do concurso]";
+const CONSERVACAO = "Até a votação final ser anunciada";
 const RESPONSAVEL = "AAAF JI BPC";
 
 export const metadata = { title: "Privacidade — Concurso de Monstrinhos" };
 export default function Privacidade() {
   return <main style={{ maxWidth: 680 }}>
     <h1>Privacidade</h1>
-    <p>Este site serve apenas para votar no Concurso de Monstrinhos organizado por {RESPONSAVEL}.</p>
+    <p>Este site serve apenas para votar no Concurso de Monstrinhos organizado pela {RESPONSAVEL}.</p>
     <h2>Que dados tratamos</h2>
     <p>Ao votar, guardamos os monstrinhos que escolheste e a data e hora do voto. Para travar abusos, guardamos também, durante no máximo uma hora, uma versão irreversível do endereço de rede (IP) do aparelho. Não pedimos nome, email nem telefone, e o voto não fica ligado a ti.</p>
     <p>As fotografias dos monstrinhos são mostradas com um número, sem o nome das crianças.</p>
