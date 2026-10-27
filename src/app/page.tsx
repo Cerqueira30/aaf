@@ -38,23 +38,24 @@ export default function Home() {
     <div className="hero" role="img" aria-label="AAAF JI BPC — Concurso de Monstrinhos" />
     <main>
       {step === "pick" && <>
-        <h1>Escolhe até 3 monstrinhos favoritos</h1>
+        <h1 className="hl">Escolhe até 3 monstrinhos favoritos</h1>
         <p className="sub">Pequenos monstros, grandes talentos!</p>
         {open && closes && <p className="sub">A votação encerra a {new Date(closes).toLocaleString("pt-PT", { dateStyle: "long", timeStyle: "short" })}.</p>}
         {!open && <p className="err">A votação está encerrada.</p>}
         {err && <p className="err" role="alert">{err}</p>}
-        {photos === null && <p>A carregar fotografias…</p>}
+        {photos === null && <div className="grid" aria-busy="true">{Array.from({ length: 6 }).map((_, i) => <div key={i} className="card sk" />)}</div>}
         {photos?.length === 0 && !err && <p>Ainda não há monstrinhos publicados. Volta mais tarde.</p>}
         <div className="grid">
           {photos?.map((p) => (
             <button key={p.id} className="card" aria-pressed={sel.includes(p.id)} onClick={() => toggle(p.id)} disabled={!open}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={p.url} alt={`Monstrinho n.º ${p.number}`} loading="lazy" />
-              <span className="n">Monstrinho n.º {p.number}</span>
+              <span className="num" aria-hidden="true">n.º {p.number}</span>
+              <span className="n">{sel.includes(p.id) ? "Escolhido" : "Escolher"}</span>
             </button>))}
         </div>
         <div className="bar">
-          <strong aria-live="polite">Selecionaste {sel.length} de 3</strong>
+          <div className="count" aria-live="polite"><span className="dots">{[0, 1, 2].map((i) => <i key={i} className={i < sel.length ? "on" : ""} />)}</span><strong>Selecionaste {sel.length} de 3</strong></div>
           <button className="btn" disabled={!sel.length || !open} onClick={() => setStep("confirm")}>Continuar</button>
         </div>
       </>}
@@ -68,7 +69,7 @@ export default function Home() {
         <button className="btn alt" disabled={busy} onClick={() => { setErr(""); setStep("pick"); }}>Alterar escolhas</button>
       </div>}
 
-      {step === "done" && <div className="panel"><h1>Votação concluída!</h1>
+      {step === "done" && <div className="panel done"><div className="okc" aria-hidden="true">✓</div><h1>Votação concluída!</h1>
         <p>Obrigado por participares no Concurso de Monstrinhos da AAAF JI BPC.</p>
         <button className="btn" onClick={() => { setSel([]); setStep("pick"); }}>Votar outra vez</button></div>}
     </main></>);

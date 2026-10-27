@@ -82,7 +82,12 @@ export default function Admin() {
   const top = rows.filter((r) => r.active && rank(r) <= 3);
   return <main>
     <h1>Administração</h1>
-    <p>Votações submetidas: <b>{tot.participations}</b> · Votos individuais: <b>{tot.votes}</b> · Fotografias ativas: <b>{rows.filter((r) => r.active).length}</b> · Votação: <b>{open ? "aberta" : "encerrada"}</b></p>
+    <div className="stats">
+      <div className="stat"><b>{tot.participations}</b><span>Votações submetidas</span></div>
+      <div className="stat"><b>{tot.votes}</b><span>Votos individuais</span></div>
+      <div className="stat"><b>{rows.filter((r) => r.active).length}</b><span>Fotografias ativas</span></div>
+      <div className="stat"><b className={open ? "ok" : "off"}>{open ? "Aberta" : "Encerrada"}</b><span>Votação</span></div>
+    </div>
     <button className="btn" onClick={() => setVoting(!open)}>{open ? "Encerrar votação" : "Abrir votação"}</button>{" "}
     <button className="btn alt" onClick={csv}>Exportar CSV</button>{" "}
     <button className="btn alt" onClick={() => sb.auth.signOut().then(() => setOk(false))}>Sair</button>
@@ -91,16 +96,16 @@ export default function Admin() {
       <button className="btn alt" onClick={saveCloses}>Guardar data</button></div>
     {msg && <p className="err" role="alert">{msg}</p>}
     <h2>Top 3</h2>
-    {top.length === 0 ? <p>Ainda não há votos.</p> : <div className="grid">{top.map((r) => <div className="card" key={r.photo_id} style={rank(r) === 1 ? { borderColor: "#d4af37" } : undefined}>
+    {top.length === 0 ? <p>Ainda não há votos.</p> : <div className="grid">{top.map((r) => <div className={`card pod p${rank(r)}`} key={r.photo_id}>
       {/* eslint-disable-next-line @next/next/no-img-element */}<img src={photoUrl(r.path)} alt={`n.º ${r.number}`} />
-      <span className="n">{rank(r)}.º lugar{tied(r) ? " (empatado)" : ""} · n.º {r.number} · {r.votes} votos</span></div>)}</div>}
+      <span className="medal">{rank(r)}.º</span><span className="n">{rank(r)}.º lugar{tied(r) ? " (empatado)" : ""} · n.º {r.number} · {r.votes} votos</span></div>)}</div>}
     <h2>Fotografias</h2>
     <label className="btn" style={{ display: "inline-block" }}>Carregar fotografias<input type="file" multiple accept="image/jpeg,image/png,image/webp" hidden onChange={(e) => upload(e.target.files)} /></label>
     <p className="sub">As novas ficam ocultas até as ativares.</p>
-    <table style={{ width: "100%", borderCollapse: "collapse" }}><thead><tr><th>Pos.</th><th></th><th>N.º</th><th>Votos</th><th>%</th><th></th></tr></thead><tbody>
-      {rows.map((r) => <tr key={r.photo_id} style={{ borderTop: "1px solid #3a2a2e", textAlign: "center" }}>
+    <div className="tw"><table className="tbl"><thead><tr><th>Pos.</th><th></th><th>N.º</th><th>Votos</th><th>%</th><th></th></tr></thead><tbody>
+      {rows.map((r) => <tr key={r.photo_id}>
         <td>{rank(r)}{tied(r) ? " (emp.)" : ""}</td>{/* eslint-disable-next-line @next/next/no-img-element */}<td><img src={photoUrl(r.path)} alt="" width={48} /></td>
         <td>{r.number}</td><td>{r.votes}</td><td>{tot.votes ? Math.round((100 * r.votes) / tot.votes) : 0}%</td>
         <td><button className="btn alt" onClick={() => toggle(r)}>{r.active ? "Ocultar" : "Publicar"}</button>{" "}<button className="btn alt" onClick={() => remove(r)}>Apagar</button></td></tr>)}
-    </tbody></table></main>;
+    </tbody></table></div></main>;
 }
